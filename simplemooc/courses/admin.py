@@ -1,9 +1,13 @@
 from django.contrib import admin
 from simplemooc.courses.models import Course
 
+
 class CourseAdmin(admin.ModelAdmin):
     list_display = ['name', 'slug', 'start_date', 'created_at']
     search_fields = ['name', 'slug']
-    prepopulated_fields = {'slug': ['name']}
+    prepopulated_fields = {'slug': ('name',)}
 
-admin.site.register(Course)
+
+admin.site.register(Course, CourseAdmin)
+
+
