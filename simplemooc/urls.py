@@ -13,14 +13,21 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls import url
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 from simplemooc.core import views as core_views
 from simplemooc.courses import views as courses_views
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', core_views.home, name='home'),
     path('contact', core_views.contact, name='contact'),
-    path('cursos/', courses_views.index, name='index')
+    path('cursos/', courses_views.index, name='index'),
+    url(r'^cursos/(?P<slug>[-\w]+)/$', courses_views.details, name='details')
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

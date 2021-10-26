@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class CourseManager(models.Manager):
@@ -12,9 +13,10 @@ class CourseManager(models.Manager):
 class Course(models.Model):
     name = models.CharField(verbose_name='Nome', max_length=100)
     slug = models.SlugField(verbose_name='Atalho')
-    description = models.TextField('Descrição', blank=True)
+    description = models.TextField('Descrição Simples', blank=True)
+    about = models.TextField('Sobre o curso', blank=True)
     start_date = models.DateField(verbose_name='Data de ínicio',
-                                  null=True, blank= True)
+                                  null=True, blank=True)
     image = models.ImageField(upload_to='courses/images',
                               verbose_name='imagem',
                               null=True, blank=True)
@@ -27,6 +29,9 @@ class Course(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('details', kwargs={'slug': self.slug})
 
     class Meta:
         verbose_name = 'Curso'
