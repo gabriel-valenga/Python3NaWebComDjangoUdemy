@@ -13,20 +13,24 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import django.contrib.auth
 from django.conf.urls import url
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from simplemooc.core import views as core_views
 from simplemooc.courses import views as courses_views
 from django.conf import settings
+from django.contrib.auth.views import LoginView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', core_views.home, name='home'),
     path('contact', core_views.contact, name='contact'),
     path('cursos/', courses_views.index, name='index'),
-    url(r'^cursos/(?P<slug>[-\w]+)/$', courses_views.details, name='details')
+    url(r'^cursos/(?P<slug>[-\w]+)/$', courses_views.details, name='details'),
+    url(r'^cursos/(?P<slug>[-\w]+)/inscricao/$', courses_views.enrollment, name='enrollment')
+
 ]
 
 if settings.DEBUG:

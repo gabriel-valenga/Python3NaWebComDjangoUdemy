@@ -21,6 +21,13 @@
     </div>
 </div>
 <div class="content">
+    {% if messages %}
+    <ul>
+       {% for message in messages %}
+        <li> {{ message }}</li>
+       {% endfor %}
+    </ul>
+    {% endif %}
     {% block content %}{% endblock %}
     <div class="footer">
         Simple MOOC - Uma simples plataforma de ensino a distância
